@@ -1,11 +1,12 @@
  pipeline {
-    agent { label 'hybris' }
+    agent any
+    triggers {
+        pollSCM '* * * * *'
+    }
     stages {
-        stage('build') {
+        stage('checkout') {
             steps {
-                echo "Hello World! SURESH"
-                bat 'set'
-            }
+                echp 'suresh'
         }
     }
 }

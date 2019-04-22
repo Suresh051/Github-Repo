@@ -1,5 +1,5 @@
 node('linux') {
-  git poll: true, url: 'https://github.com/harniman/hello-world-simple-mvn'
+  git poll: true, url: 'https://github.com/Suresh051/Github-Repo.git'
   ensureMaven()
   sh "cd hello-world-simple-mvn; mvn package"
 }

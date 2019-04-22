@@ -1,21 +1,9 @@
-pipeline {
-    agent any
+node('linux') {
+  git poll: true, url: 'https://github.com/harniman/hello-world-simple-mvn'
+  ensureMaven()
+  sh "cd hello-world-simple-mvn; mvn package"
+}
 
-    stages {
-        stage('Build') {
-            steps {
-                echo 'Building..'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
-        }
-    }
+def ensureMaven() {
+  env.PATH = "${tool 'Maven 3.x'}/bin:${env.PATH}"
 }

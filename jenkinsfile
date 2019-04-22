@@ -4,9 +4,7 @@
         stage('build') {
             steps {
                 echo "Hello World! SURESH"
-                sh "echo Hello from the shell"
-                sh "hostname"
-                sh "uptime"
+                bat 'set'
             }
         }
     }

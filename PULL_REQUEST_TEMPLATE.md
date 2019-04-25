@@ -1,11 +1,8 @@
-## Types of changes
-<!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to change)
-- [ ] I have read the **CONTRIBUTING** document.
-- [ ] My code follows the code style of this project.
-- [ ] My change requires a change to the documentation.
-- [ ] I have updated the documentation accordingly.
-- [ ] I have added tests to cover my changes.
-- [ ] All new and existing tests passed.
+### Prerequisites
+
+* [ ] Can you reproduce the problem in safe mode?
+* [ ] Are you running the latest version?
+* [ ] Did you check the debugging guide?
+* [ ] Did you check the FAQs on Discuss?
+* [ ] Are you reporting to the correct repository?
+* [ ] Did you perform a cursory search?

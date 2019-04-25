@@ -1,18 +1,26 @@
-## Description
-A few sentences describing the overall goals of `merge request`
+ {
+        taskList : true
+    }
 
-## List of General Components affected
+### Examples
 
-## Status
-- [ ] Ready for Review
-
-## Types of changes
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to change)
-
-## Non Functional Requirement
-- [ ] Follows the code style of this project.
-- [ ] Tests Cover Changes
-- [ ] All new and existing tests passed.
-- [ ] Documentation
+- [ ] @mentions, #refs, [links](), **formatting**, and <del>tags</del> supported;
+- [ ] list syntax required (any unordered or ordered list supported);
+- [ ] this is a complete item;
+- [ ] this is an incomplete item [test link](#);
+- [ ] this is an incomplete item;
+    - [ ] this is an incomplete item [test link](#);
+    - [ ] this is an incomplete item [test link](#);
+- [ ] list syntax required (any unordered or ordered list supported);
+- [ ] this is a complete item;
+- [ ] this is an incomplete item [test link](#);
+- [ ] this is an incomplete item;
+    - [ ] this is an incomplete item [test link](#);
+- [ ] list syntax required (any unordered or ordered list supported);
+- [ ] this is a complete item;
+- [ ] this is an incomplete item [test link](#);
+- [ ] this is an incomplete item;
+    - [ ] this is an incomplete item [test link](#);
+    - [ ] this is an incomplete item [test link](#);
+- [ ] this is an incomplete item;
+> Github Flavored Markdown task lists

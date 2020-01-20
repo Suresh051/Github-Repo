@@ -8,7 +8,7 @@ stage('Eample'){
 steps {
 echo 'Hello World!'
 
-sh 'echo myCustomEnvVar=$myCustomEnvVa'
+sh 'echo myCustomEnvVar=$myCustomEnvVar'
       }
      }
    }

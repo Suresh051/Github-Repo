@@ -32,7 +32,7 @@ pipeline {
 		          steps
 				  {
 					 sh '''
-                                        COMMIT_ID=$(git show-ref ${params.TAG})
+                                        COMMIT_ID=$(git show-ref "${params.TAG}")
 					echo ${COMMIT_ID}
                                         echo ${params.TAG}
 					echo "deploying to dev"

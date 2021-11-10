@@ -4,6 +4,11 @@ pipeline {
         choice choices: ['Dev', 'Staging', 'Production'], description: "Choose which environment to push changes to.", name: "DEPLOY_TO"
         gitParameter name: 'TAG',type: 'PT_TAG',defaultValue: 'master'
     }
+	
+	environment {
+     
+        DEPLOY_TO = "${params.DEPLOY_TO}"
+    }
     stages {
         stage('Example') {
             steps {
@@ -17,5 +22,23 @@ pipeline {
                         ])
             }
         }
+		stage('Deploy to dev') {
+		      when {
+                allOf { 
+                    environment ignoreCase: true, name: "DEPLOY_TO", value: "dev";
+                }
+            }
+		          steps
+				  {
+				    cho "deploying to dev"
+				    COMMIT_ID=$(git rev-list --tags --date-order | head -1)
+					TAG=$(git show-ref --tags | grep $COMMIT_ID | awk -F / '{print $NF}' )
+					echo $COMMIT_ID
+                    cho $TAG
+				  }
+		}
+		
+		
     }
 }
+

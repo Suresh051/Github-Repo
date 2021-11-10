@@ -8,6 +8,7 @@ pipeline {
 	environment {
      
         DEPLOY_TO = "${params.DEPLOY_TO}"
+	TAGS = "${params.TAG}"
     }
     stages {
         stage('Example') {
@@ -31,10 +32,9 @@ pipeline {
 		          steps
 				  {
 					 sh '''
-                                        COMMIT_ID=$(git rev-list --tags --date-order | head -1)
-					TAG=$(git show-ref --tags | grep $COMMIT_ID | awk -F / '{print $NF}' )
-					echo $COMMIT_ID
-                                        echo $TAG
+                                        COMMIT_ID=$(git show-ref ${params.TAG})
+					echo ${COMMIT_ID}
+                                        echo ${params.TAG}
 					echo "deploying to dev"
                                          '''
 					

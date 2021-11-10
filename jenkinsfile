@@ -1,7 +1,5 @@
 pipeline {
-agent {
-dockerfile true
-}
+agent {dockerfile true}
 
 stages{
 stage('Eample'){
@@ -9,14 +7,17 @@ steps {
 echo 'Hello World!'
 sh 'echo myCustomEnvVar=$myCustomEnvVar'
       }
-     }
-  def tag = sh(returnStdout: true, script: "git tag --contains | head -1").trim()
-    if (tag) {
+   }
         stage("deploy") {
           steps {
-            echo "Deloying to dev"
-            }
-        }
-    }   
+		    script {
+			    def tag = sh(returnStdout: true, script: "git tag --contains | head -1").trim()
+                if (tag) {      
+                     echo "Deloying to dev"
+                       }
+                   }
+                }   
+				
+		 }
    }
  }

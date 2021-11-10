@@ -2,7 +2,7 @@ pipeline {
 agent {dockerfile true}
  parameters {
         choice choices: ['Dev', 'Staging', 'Production'], description: "Choose which environment to push changes to.", name: "DEPLOY_TO"
-	gitParameter branch: '', branchFilter: '.*', defaultValue: '', name: '', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '*', type: 'PT_TAG', useRepository: 'Github-Repo'
+	 gitParameter branch: '', branchFilter: '.*', defaultValue: '', listSize: '6', name: 'TAGS', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '*', type: 'PT_TAG', useRepository: 'Github-Repo'
     }
    environment {
          SITEID = "lb"
@@ -25,18 +25,12 @@ sh 'echo myCustomEnvVar=$myCustomEnvVar'
         stage("deploy-dev") {
 	  when {
                 allOf { 
-                    environment ignoreCase: true, name: "DEPLOY_TO", value: "dev"; 
-                    tag "release-*"
+                    environment ignoreCase: true, name: "DEPLOY_TO", value: "dev";
+		    environment ignoreCase: true, name: "TAGS", value: "release*";
                 }
             }
           steps {
-		    script {
-			    def tag = sh(returnStdout: true, script: "git tag --contains | head -1").trim()
-                if (tag) {    
-		     echo "${tag}"
-                     echo "Deloying to dev"
-                       }
-                   }
+		  echo "deploying to dev "
                 }   
 				
 		 }

@@ -2,6 +2,13 @@ pipeline {
     agent any
 
     stages {
+
+        stage('checkout') {
+          steps {
+          checkout([$class: 'GitSCM', branches: [[name: '**/tags/**']], extensions: [], userRemoteConfigs: [[refspec: '+refs/tags/*’:’refs/remotes/origin/tags/*', url: 'https://github.com/Suresh051/Github-Repo.git']]])
+          }
+        
+         }
         stage('Build') {
             steps {
                 echo 'Building..'

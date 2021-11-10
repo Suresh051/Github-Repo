@@ -1,49 +1,16 @@
 pipeline {
-    agent any
-    parameters {
-        choice choices: ['Dev', 'Staging', 'Production'], description: "Choose which environment to push changes to.", name: "DEPLOY_TO"
-        gitParameter name: 'TAG',type: 'PT_TAG',defaultValue: 'master'
-    }
-	
-	environment {
-     
-        DEPLOY_TO = "${params.DEPLOY_TO}"
-	TAGS = "${params.TAG}"
-    }
-    stages {
-        stage('Example') {
-            steps {
-                checkout([$class: 'GitSCM',
-                          branches: [[name: "${params.TAG}"]],
-                          doGenerateSubmoduleConfigurations: false,
-                          extensions: [],
-                          gitTool: 'Default',
-                          submoduleCfg: [],
-                          userRemoteConfigs: [[url: 'https://github.com/Suresh051/Github-Repo.git']]
-                        ])
+      agent {
+            dockerfile {
+                filename 'Dockerfile'
+                dir 'cicd/docker'
+                label 'Docker-enabled'
             }
         }
-		stage('Deploy to dev') {
-		      when {
-                allOf { 
-                    environment ignoreCase: true, name: "DEPLOY_TO", value: "dev";
-                }
+    stages {
+        stage('Test') {
+            steps {
+                sh 'node --version'
             }
-		          steps
-				  {
-					sh 'echo "Hello World"'
-                			sh '''
-                   			    echo "Multiline shell steps works too"
-                   			    ls -lah
-					    COMMIT_ID=$(git show-ref $TAGS)
-					    echo "${COMMIT_ID}"
-					    echo "${TAGS}"
-                			'''
-					
-				  }
-		}
-		
-		
+        }
     }
 }
-

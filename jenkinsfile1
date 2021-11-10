@@ -1,9 +1,8 @@
 pipeline {
     agent any
     parameters {
-        gitParameter name: 'TAG',
-                     type: 'PT_TAG',
-                     defaultValue: 'master'
+        choice choices: ['Dev', 'Staging', 'Production'], description: "Choose which environment to push changes to.", name: "DEPLOY_TO"
+        gitParameter name: 'TAG',type: 'PT_TAG',defaultValue: 'master'
     }
     stages {
         stage('Example') {

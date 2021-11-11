@@ -19,7 +19,7 @@ pipeline {
       stage('Authorize DevHub') {
              steps{
 	       script {
-		  rc = command "sfcc-ci client:auth '${sfcc_ClientId}' '${sfcc_Client_Secre}'"
+		  rc = command 'sfcc-ci client:auth ${sfcc_ClientId} ${sfcc_Client_Secre}'
 		  if (rc != 0) {
                    error 'Salesforce dev hub org authorization failed.'
                      }

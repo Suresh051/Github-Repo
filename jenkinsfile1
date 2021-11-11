@@ -10,7 +10,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'node --version'
-                sfcc-ci --help
+                sh  'sfcc-ci --help'
             }
         }
     }

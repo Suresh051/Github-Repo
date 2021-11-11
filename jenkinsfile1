@@ -15,7 +15,7 @@ pipeline {
       stage('Authorize DevHub') {
              steps{
 		 sh ''' 
-                     sfcc-ci client:auth dd8b0698-f881-4065-8bb6-2e554aefdd73 sandboxes123!
+                     sfcc-ci client:auth dd8b0698-f881-4065-8bb6-2e554aefdd73 sandboxes12!
 		     if [ $? != 0 ]; then
                        echo 'Salesforce dev hub org authorization failed.'
 	             fi

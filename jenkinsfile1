@@ -14,15 +14,17 @@ pipeline {
         }
       stage('Authorize DevHub') {
              steps{
-		 sh ''' 
-		     sfcc-ci client:auth dd8b0698-f881-4065-8bb6-2e554aefdd73 sandboxes123
-                     if [ $? -eq 0 ]; then
-   		     echo OK
-		     else
-   		     echo FAIL
-	             fi
-                 '''
-		}   
+	       script {
+		 try {
+		 sh 'sfcc-ci client:auth dd8b0698-f881-4065-8bb6-2e554aefdd73 sandboxes123)'
+		 }
+		 catch (err) {
+                   echo "Caught: ${err}"
+                   currentBuild.result = 'FAILURE'
+                    }
+		 
+		}  
+	   }	
         }
     }
 }

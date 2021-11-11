@@ -9,6 +9,7 @@ pipeline {
      environment {
         sfcc_ClientId  = credentials('CLIENT_ID')
         sfcc_Client_Secret  = credentials('CLIENT_SECRET')
+	dev_env = "bgtm-024.sandbox.us01.dx.commercecloud.salesforce.com"
        }
     stages {
         stage('Test') {
@@ -26,6 +27,19 @@ pipeline {
 		}  
 	    }	
         }
+      stage('Deploy DevHub'') {
+          steps{
+		script {
+			echo "#####Initiating Deployment to DevHub#####"
+			rc = command 'sfcc-ci code:deploy test.zip -i bgtm-024.sandbox.us01.dx.commercecloud.salesforce.com'
+			echo "################SUCCESSFULLY DEPLOYED################"
+		        if (rc != 0) {
+                           error 'Salesforce deployment to DevHub failed.'
+                     	}
+		  }
+              }	   
+	  }	
+	
     }
 }
 def command(script) {

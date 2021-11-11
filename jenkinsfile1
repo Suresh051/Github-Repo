@@ -27,7 +27,7 @@ pipeline {
 		}  
 	    }	
         }
-      stage('Deploy DevHub'') {
+      stage('Deploy DevHub') {
           steps{
 		script {
 			echo "#####Initiating Deployment to DevHub#####"

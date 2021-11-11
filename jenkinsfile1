@@ -6,6 +6,10 @@ pipeline {
                 label 'Docker-enabled'
             }
         }
+     environment {
+        sfcc_ClientId  = credentials('CLIENT_ID')
+        sfcc_Client_Secret  = credentials('CLIENT_SECRET')
+       }
     stages {
         stage('Test') {
             steps {
@@ -16,7 +20,7 @@ pipeline {
              steps{
 	       script {
 		 try {
-		 sh 'sfcc-ci client:auth '
+		 sh 'sfcc-ci client:auth ${sfcc_ClientId} ${sfcc_Client_Secret}'
 		 }
 		 catch (err) {
                    echo "Caught: ${err}"

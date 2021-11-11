@@ -16,7 +16,7 @@ pipeline {
              steps{
 		 sh ''' 
                      sfcc-ci client:auth dd8b0698-f881-4065-8bb6-2e554aefdd73 sandboxes123!
-		     rc=$?
+		     def rc=$?
                      if (rc != 0) then {
                      error 'Salesforce dev hub org authorization failed.'
                           }

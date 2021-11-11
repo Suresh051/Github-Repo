@@ -14,13 +14,13 @@ pipeline {
         }
       stage('Authorize DevHub') {
              steps{
-		    script {
-                rc = command "sfcc-ci client:auth dd8b0698-f881-4065-8bb6-2e554aefdd73 sandboxes123!"
-                if (rc != 0) {
-                    error 'Salesforce dev hub org authorization failed.'
+		 sh ''' 
+                     sfcc-ci client:auth dd8b0698-f881-4065-8bb6-2e554aefdd73 sandboxes123!"
+		     rc=$?
+                     if (rc != 0) {
+                     error 'Salesforce dev hub org authorization failed.'
                           }
-		     }	
-               }
+                 '''
 		}   
         
     }

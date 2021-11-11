@@ -32,10 +32,10 @@ pipeline {
 		script {
 			echo "#####Initiating Deployment to DevHub#####"
 			rc = command 'sfcc-ci code:deploy test.zip -i bgtm-024.sandbox.us01.dx.commercecloud.salesforce.com'
-			echo "################SUCCESSFULLY DEPLOYED################"
 		        if (rc != 0) {
                            error 'Salesforce deployment to DevHub failed.'
                      	}
+			echo "################SUCCESSFULLY DEPLOYED################"
 		  }
               }	   
 	  }	

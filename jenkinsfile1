@@ -19,16 +19,20 @@ pipeline {
       stage('Authorize DevHub') {
              steps{
 	       script {
-		 try {
-		 sh 'sfcc-ci client:auth ${sfcc_ClientId} ${sfcc_Client_Secret}'
-		 }
-		 catch (err) {
-                   echo "Caught: ${err}"
-                   currentBuild.result = 'FAILURE'
-                    }
-		 
+		  rc = command "sfcc-ci client:auth ${sfcc_ClientId} ${sfcc_Client_Secret}"
+		  if (rc != 0) {
+                   error 'Salesforce dev hub org authorization failed.'
+                     }
 		}  
-	   }	
+	    }	
         }
     }
 }
+def command(script) {
+    if (isUnix()) {
+        return sh(returnStatus: true, script: script);
+    } else {
+        return bat(returnStatus: true, script: script);
+    }	 
+}
+

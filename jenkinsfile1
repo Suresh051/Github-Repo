@@ -50,7 +50,31 @@ pipeline {
 			echo "######SUCCESSFULLY ACTIVATED#####"
 		  }
        		 }	   
-	  } */	
+	  } 
+       stage('Data Upload') {
+          steps{
+		script {
+			echo "#####Initiating Data Upload#####"
+			rc = command 'sfcc-ci instance:upload <path/to/data.zip> -i your-instance.demandware.net'
+		        if (rc != 0) {
+                           error 'Data Upload failed.'
+                     	}
+			echo "######SUCCESSFULLY DATA UPLOADED#####"
+		  }
+             }	   
+	  }	
+      stage('Data Import') {
+          steps{
+		script {
+			echo "#####Initiating Data Import#####"
+			rc = command 'sfcc-ci instance:import <data.zip> -i your-instance.demandware.net -s'
+		        if (rc != 0) {
+                           error 'Data Import failed.'
+                     	}
+			echo "######SUCCESSFULLY DATA IMPORTED#####"
+		  }
+      	      }	   
+	  } */  	  
     }
 }
 def command(script) {

@@ -4,6 +4,9 @@ pipeline {
         choice choices: ['Dev', 'Staging', 'Production'], description: "Choose which environment to push changes to.", name: "DEPLOY_TO"
 	  gitParameter branch: '', branchFilter: '.*', defaultValue: '', listSize: '6', name: 'GitTags', quickFilterEnabled: false, selectedValue: 'TOP', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_TAG', useRepository: 'Github-Repo'
     }
+    options {
+  skipDefaultCheckout false
+}
 	environment {
         DEPLOY_TO = "${params.DEPLOY_TO}"
 	Tag = "${params.GitTags}"

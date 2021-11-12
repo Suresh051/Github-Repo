@@ -14,13 +14,20 @@ pipeline {
     stages {
        stage('BUILD') {
 	        steps {
+		    script {
+		        try {
                     dir('sfra-webpack-builder/') {
                         sh('npm install')
 			sh('npm run npm Install')
 			sh('npm run dev')	  
            	    }
+		   }catch (e) {   
+                           currentBuild.result="FAILED"
+                           throw e
+                    } 
 		 }
-             }
+	      }	 
+            }
       stage('Authorize DevHub') {
              steps{
 	       script {
@@ -31,7 +38,7 @@ pipeline {
 		}  
 	    }	
         }
-      stage('Deploys CodeVersion') {
+  /* stage('Deploys CodeVersion') {
           steps{
 		script {
 			echo "#####Initiating Deployment to Commerce Cloud instance#####"
@@ -43,7 +50,7 @@ pipeline {
 		  }
               }	   
 	  }	
- /*    stage('Activate CodeVersion') {
+    stage('Activate CodeVersion') {
            steps{
 		script {
 			echo "#####ACTIVATE CODEVERSION#####"
@@ -80,6 +87,31 @@ pipeline {
       	      }	   
 	  } */  	  
     }
+    
+        post {
+      /*
+      https://www.jenkins.io/doc/book/pipeline/syntax/#post
+      Always post somewhere the watermark:
+  	- md5sum of Jenkinsfile
+  	- Output of the Jenkinsfile checker output
+      */
+      success {
+      notifyBuild('Pipeline-Build Job success')
+      cleanWs()
+      }
+      failure {
+     	notifyBuild('Pipeline-Build Job Failed')
+        cleanWs()
+      }
+      unstable {
+        cleanWs()
+      }
+    }       
+}
+
+def notifyBuild(def buildStatus = currentBuild.result) {
+    echo "######${buildStatus}######"
+
 }
 def command(script) {
     if (isUnix()) {

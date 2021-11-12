@@ -19,7 +19,9 @@ pipeline {
                     dir('sfra-webpack-builder/') {
                         echo "sh('npm install')" 
 			echo "sh('npm run npm Install')"
-			echo "sh('npm run dev')" 	  
+			echo "sh('npm run dev')" 
+			commitId = getCommit()
+                        echo "##########${commitID}########"
            	    }
 		   }catch (e) {   
                            currentBuild.result="FAILED"
@@ -119,5 +121,8 @@ def command(script) {
     } else {
         return bat(returnStatus: true, script: script);
     }	 
+}
+String getCommit() {
+return sh(script: 'git rev-parse HEAD', returnStdout: true)?.trim()
 }
 

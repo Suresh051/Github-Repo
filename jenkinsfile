@@ -2,9 +2,11 @@ pipeline {
     agent any
     parameters {
         choice choices: ['Dev', 'Staging', 'Production'], description: "Choose which environment to push changes to.", name: "DEPLOY_TO"
+	  gitParameter branch: '', branchFilter: '.*', defaultValue: '', listSize: '6', name: 'GitTags', quickFilterEnabled: false, selectedValue: 'TOP', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_TAG', useRepository: 'Github-Repo'
     }
 	environment {
         DEPLOY_TO = "${params.DEPLOY_TO}"
+	Tag = "${params.GitTags}"
     }
     stages {
 		stage('Deploy to dev') {
@@ -15,6 +17,7 @@ pipeline {
 		  {
 				 script {
 				    echo "deploying to dev"
+				    echo "${Tag}"
 				  }
 	     	}
 		}

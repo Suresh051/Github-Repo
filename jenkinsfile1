@@ -97,11 +97,11 @@ pipeline {
   	- Output of the Jenkinsfile checker output
       */
       success {
-      notifyBuild('Pipeline-Build Job success')
+      notifyStatus()
       cleanWs()
       }
       failure {
-     	notifyBuild('Pipeline-Build Job Failed')
+     	notifyStatus()
         cleanWs()
       }
       unstable {
@@ -110,8 +110,10 @@ pipeline {
     }       
 }
 
-def notifyBuild(def buildStatus = currentBuild.result) {
-    echo "######${buildStatus}######"
+def notifyStatus(def buildStatus = currentBuild.result) {
+   def details = """<p>${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+    <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>"""
+    echo "${details}"
 
 }
 def command(script) {

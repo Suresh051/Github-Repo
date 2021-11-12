@@ -32,58 +32,83 @@ pipeline {
       stage('Authorize DevHub') {
              steps{
 	       script {
+	           try {
 		  rc = command 'sfcc-ci client:auth ${sfcc_ClientId} ${sfcc_Client_Secret}'
 		  if (rc != 0) {
                    error 'Salesforce dev hub org authorization failed.'
                      }
+		    }catch (e) {   
+                           currentBuild.result="FAILED"
+                           throw e
+                    }  
 		}  
 	    }	
         }
   stage('Deploys CodeVersion') {
           steps{
 		script {
+		     try {
 			echo "#####Initiating Deployment to Commerce Cloud instance#####"
 			rc = command "sfcc-ci code:deploy ${CodeVersion}.zip -i ${dev_env}"
 		        if (rc != 0) {
                            error 'Commerce Cloud instance deployment failed.'
                      	}
 			echo "################SUCCESSFULLY DEPLOYED################"
+		    }catch (e) {   
+                           currentBuild.result="FAILED"
+                           throw e
+                    } 
 		  }
               }	   
 	  }	
  /*    stage('Activate CodeVersion') {
            steps{
 		script {
+		    try {
 			echo "#####ACTIVATE CODEVERSION#####"
 			rc = command 'sfcc-ci code:activate ${CodeVersion} -i your-instance.demandware.net'
 		        if (rc != 0) {
                            error 'CodeVersion Activation Failed.'
                      	}
 			echo "######SUCCESSFULLY ACTIVATED#####"
+	           }catch (e) {   
+                           currentBuild.result="FAILED"
+                           throw e
+                    } 		
 		  }
-       		 }	   
+       		}	   
 	  } 
        stage('Data Upload') {
           steps{
 		script {
+		     try {
 			echo "#####Initiating Data Upload#####"
 			rc = command 'sfcc-ci instance:upload <path/to/data.zip> -i your-instance.demandware.net'
 		        if (rc != 0) {
                            error 'Data Upload failed.'
                      	}
 			echo "######SUCCESSFULLY DATA UPLOADED#####"
+		    }catch (e) {   
+                           currentBuild.result="FAILED"
+                           throw e
+                    } 	
 		  }
              }	   
 	  }	
       stage('Data Import') {
           steps{
 		script {
+		    try {
 			echo "#####Initiating Data Import#####"
 			rc = command 'sfcc-ci instance:import <data.zip> -i your-instance.demandware.net -s'
 		        if (rc != 0) {
                            error 'Data Import failed.'
                      	}
 			echo "######SUCCESSFULLY DATA IMPORTED#####"
+		    }catch (e) {   
+                           currentBuild.result="FAILED"
+                           throw e
+                    } 
 		  }
       	      }	   
 	  } */  	  

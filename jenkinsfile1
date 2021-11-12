@@ -21,7 +21,6 @@ pipeline {
 			echo "sh('npm run npm Install')"
 			echo "sh('npm run dev')" 
 			CodeVersion = getCommit()
-                        echo "##########${CodeVersion}########"
            	    }
 		   }catch (e) {   
                            currentBuild.result="FAILED"
@@ -44,7 +43,6 @@ pipeline {
           steps{
 		script {
 			echo "#####Initiating Deployment to Commerce Cloud instance#####"
-			echo "In Deploy Stage##########${CodeVersion}########"
 			rc = command "sfcc-ci code:deploy ${CodeVersion}.zip -i ${dev_env}"
 		        if (rc != 0) {
                            error 'Commerce Cloud instance deployment failed.'

@@ -40,11 +40,11 @@ pipeline {
 		}  
 	    }	
         }
-  /* stage('Deploys CodeVersion') {
+  stage('Deploys CodeVersion') {
           steps{
 		script {
 			echo "#####Initiating Deployment to Commerce Cloud instance#####"
-			rc = command 'sfcc-ci code:deploy <path/to/${CodeVersion}.zip> -i bgtm-024.sandbox.us01.dx.commercecloud.salesforce.com'
+			rc = command 'sfcc-ci code:deploy <path/to/${CodeVersion}.zip> -i ${dev_env}'
 		        if (rc != 0) {
                            error 'Commerce Cloud instance deployment failed.'
                      	}
@@ -52,7 +52,7 @@ pipeline {
 		  }
               }	   
 	  }	
-    stage('Activate CodeVersion') {
+ /*    stage('Activate CodeVersion') {
            steps{
 		script {
 			echo "#####ACTIVATE CODEVERSION#####"

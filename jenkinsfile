@@ -1,36 +1,22 @@
 pipeline {
-agent {dockerfile true}
- parameters {
+    agent any
+    parameters {
         choice choices: ['Dev', 'Staging', 'Production'], description: "Choose which environment to push changes to.", name: "DEPLOY_TO"
-	 gitParameter branch: '', branchFilter: '.*', defaultValue: '', listSize: '6', name: 'TAGS', quickFilterEnabled: false, selectedValue: 'TOP', sortMode: 'NONE', tagFilter: '*', type: 'PT_TAG', useRepository: 'Github-Repo'
     }
-   environment {
-         SITEID = "lb"
-        NOFLAGS = "0"
-        DBNAME = "wpress_myproject"
-        DBSERVER = "dbserver"
-        DBUSER = "WordpressUser"
-        DBPASS = "hiddenpassword"
-        EXCLUDE = "domain_commentmeta,domain_comments"  // separate multiple tables with commas
+	environment {
         DEPLOY_TO = "${params.DEPLOY_TO}"
-        Tag = "${params.TAGS}"
     }
-stages{
-stage('Eample'){
-steps {
-echo 'Hello World!'
-sh 'echo myCustomEnvVar=$myCustomEnvVar'
-      }
-   }
-        stage("deploy-dev") {
-	  when {
-                environment ignoreCase: true, name: "DEPLOY_TO", value: "Dev";
-                }
+    stages {
+		stage('Deploy to dev') {
+		      when {
+                   environment ignoreCase: true, name: "DEPLOY_TO", value: "dev";
             }
-          steps {
-		  echo "deploying to dev ${Tag}"
-                }   
-				
-		 }
-   }
- }
+		   steps
+		  {
+				 script {
+				    echo "deploying to dev"
+				  }
+	     	}
+		}
+    }		
+    }

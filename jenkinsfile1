@@ -44,7 +44,7 @@ pipeline {
           steps{
 		script {
 			echo "#####Initiating Deployment to Commerce Cloud instance#####"
-			rc = command 'sfcc-ci code:deploy <path/to/${CodeVersion}.zip> -i ${dev_env}'
+			rc = command 'sfcc-ci code:deploy ${CodeVersion}.zip -i ${dev_env}'
 		        if (rc != 0) {
                            error 'Commerce Cloud instance deployment failed.'
                      	}

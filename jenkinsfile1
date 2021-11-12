@@ -27,19 +27,30 @@ pipeline {
 		}  
 	    }	
         }
-      stage('Deploy DevHub') {
+      stage('Deploys CodeVersion') {
           steps{
 		script {
-			echo "#####Initiating Deployment to DevHub#####"
+			echo "#####Initiating Deployment to Commerce Cloud instance#####"
 			rc = command 'sfcc-ci code:deploy test.zip -i bgtm-024.sandbox.us01.dx.commercecloud.salesforce.com'
 		        if (rc != 0) {
-                           error 'Salesforce deployment to DevHub failed.'
+                           error 'Commerce Cloud instance deployment failed.'
                      	}
 			echo "################SUCCESSFULLY DEPLOYED################"
 		  }
               }	   
 	  }	
-	
+ /*    stage('Activate CodeVersion') {
+           steps{
+		script {
+			echo "#####ACTIVATE CODEVERSION#####"
+			rc = command 'sfcc-ci code:activate <code_version> -i your-instance.demandware.net'
+		        if (rc != 0) {
+                           error 'CodeVersion Activation Failed.'
+                     	}
+			echo "######SUCCESSFULLY ACTIVATED#####"
+		  }
+       		 }	   
+	  } */	
     }
 }
 def command(script) {

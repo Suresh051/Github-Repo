@@ -5,7 +5,7 @@ pipeline {
 	  gitParameter branch: '', branchFilter: '.*', defaultValue: '', listSize: '6', name: 'TAG', quickFilterEnabled: false, selectedValue: 'TOP', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_TAG', useRepository: 'Github-Repo'
     }
     options {
-  skipDefaultCheckout false
+  skipDefaultCheckout true
   }
 	environment {
         DEPLOY_TO = "${params.DEPLOY_TO}"

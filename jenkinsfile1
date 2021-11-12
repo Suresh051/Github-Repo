@@ -17,9 +17,9 @@ pipeline {
 		    script {
 		        try {
                     dir('sfra-webpack-builder/') {
-                        sh('npm install')
-			sh('npm run npm Install')
-			sh('npm run dev')	  
+                        echo "sh('npm install')" 
+			echo "sh('npm run npm Install')"
+			echo "sh('npm run dev')" 	  
            	    }
 		   }catch (e) {   
                            currentBuild.result="FAILED"

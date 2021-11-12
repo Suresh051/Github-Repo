@@ -12,11 +12,15 @@ pipeline {
 	dev_env = "bgtm-024.sandbox.us01.dx.commercecloud.salesforce.com"
        }
     stages {
-        stage('Test') {
-            steps {
-              echo "Test"
-            }
-        }
+       stage('BUILD') {
+	        steps {
+                    dir('sfra-webpack-builder/') {
+                        sh('npm install')
+			sh('npm run npm Install')
+			sh('npm run dev')	  
+           	    }
+		 }
+             }
       stage('Authorize DevHub') {
              steps{
 	       script {

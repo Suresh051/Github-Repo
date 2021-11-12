@@ -44,7 +44,7 @@ pipeline {
 		}  
 	    }	
         }
-  stage('Deploys CodeVersion') {
+ /* stage('Deploys CodeVersion') {
           steps{
 		script {
 		     try {
@@ -61,7 +61,7 @@ pipeline {
 		  }
               }	   
 	  }	
- /*    stage('Activate CodeVersion') {
+  stage('Activate CodeVersion') {
            steps{
 		script {
 		    try {

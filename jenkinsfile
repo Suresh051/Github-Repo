@@ -13,7 +13,7 @@ agent {dockerfile true}
         DBPASS = "hiddenpassword"
         EXCLUDE = "domain_commentmeta,domain_comments"  // separate multiple tables with commas
         DEPLOY_TO = "${params.DEPLOY_TO}"
-        DEPLOY_DB = "${params.DEPLOY_DB}"
+        Tag = "${params.TAGS}"
     }
 stages{
 stage('Eample'){
@@ -26,11 +26,11 @@ sh 'echo myCustomEnvVar=$myCustomEnvVar'
 	  when {
                 allOf { 
                     environment ignoreCase: true, name: "DEPLOY_TO", value: "dev";
-		    environment ignoreCase: true, name: "TAGS", value: "release*";
+		
                 }
             }
           steps {
-		  echo "deploying to dev "
+		  echo "deploying to dev ${Tag}"
                 }   
 				
 		 }

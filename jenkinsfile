@@ -1,41 +1,18 @@
 pipeline {
     agent any
-    parameters {
-        choice choices: ['Dev', 'Staging', 'Production'], description: "Choose which environment to push changes to.", name: "DEPLOY_TO"
-	  gitParameter branch: '', branchFilter: '.*', defaultValue: '', listSize: '6', name: 'TAG', quickFilterEnabled: false, selectedValue: 'TOP', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_TAG', useRepository: 'Github-Repo'
-    }
-    options {
-  skipDefaultCheckout true
-  }
-	environment {
-        DEPLOY_TO = "${params.DEPLOY_TO}"
-	git_Tag = "${params.TAG}"
-    }
+ 	 options {
+  	skipDefaultCheckout true
+  	}
     stages {
-    
-     stage('Example') {
-            steps {
-                checkout([$class: 'GitSCM',
-                          branches: [[name: "${params.TAG}"]],
-                          doGenerateSubmoduleConfigurations: false,
-                          extensions: [],
-                          gitTool: 'Default',
-                          submoduleCfg: [],
-                          userRemoteConfigs: [[url: 'https://github.com/Suresh051/Github-Repo.git']]
-                        ])
-            }
-        }
-		stage('Deploy to dev') {
-		      when {
-                   environment ignoreCase: true, name: "DEPLOY_TO", value: "dev";
-            }
-		   steps
-		  {
-				 script {
-				    echo "deploying to dev"
-				    echo "${git_Tag}"
-				  }
-	     	}
+        steps {
+	    script {
+	 env.GIT_TAG_NAME = gitTagName()
+	 echo "${env.GIT_TAG_NAME}"
 		}
-    }		
-    }
+	    }
+		
+        }		
+  }
+String gitTagName() {
+return sh(returnStdout: true, script: "git tag --sort version:refname | tail -1").trim()
+}

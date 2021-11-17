@@ -1,0 +1,148 @@
+pipeline {
+      agent {
+            dockerfile {
+                filename 'Dockerfile'
+                dir 'cicd/docker'
+                label 'Docker-enabled'
+            }
+        }
+     environment {
+        sfcc_ClientId  = credentials('CLIENT_ID')
+        sfcc_Client_Secret  = credentials('CLIENT_SECRET')
+	    dev_env = "bgtm-024.sandbox.us01.dx.commercecloud.salesforce.com"
+       }
+    stages {
+       stage('Install Deps') {
+	        steps {
+				script {
+					try {
+					   rc = command 'npm run setup'
+					   if (rc != 0) {
+                           error 'Install Deps Failed.'
+                     	}
+			}catch (e) {   
+                           currentBuild.result="FAILED"
+                           throw e
+                    } 
+				}
+			}	 
+		}
+	   stage('Build Code') {
+	        steps {
+				script {
+					try {
+					  rc = command 'npm run build:dev'
+					  if (rc != 0) {
+                           error 'Build code Failed.'
+                     	}					  
+			}catch (e) {   
+                           currentBuild.result="FAILED"
+                           throw e
+                    } 
+				}
+			}	 
+		}
+	 stage('Data Zip') {
+	        steps {
+				script {
+					try {
+					rc = command 'npm run data:zip'
+					if (rc != 0) {
+                           error 'Data Zip Failed.'
+                     	}
+                     	
+			}catch (e) {   
+                           currentBuild.result="FAILED"
+                           throw e
+                    } 
+				}
+			}	 
+		}
+    stage('Data Deploy') {
+	        steps {
+				script {
+					try {
+					echo "#####Initiating Data Import#####"
+					rc = command 'npm run data:deploy ./dist/site-impex.zip -- -cid $SFCC_OAUTH_CLIENT_ID -cs $SFCC_OAUTH_CLIENT_SECRET -i $Instance'
+					if (rc != 0) {
+                           error 'Data Deploy Failed.'
+                     	}
+                     	echo "################SUCCESSFULLY DATA IMPORTED################"
+			}catch (e) {   
+                           currentBuild.result="FAILED"
+                           throw e
+                    } 
+				}
+			}	 
+		}
+	stage('Code Zip') {
+	        steps {
+				script {
+					try {
+					rc = command 'npm run code:zip $BUILD_VERSION'
+					if (rc != 0) {
+                           error 'Code Zip Failed.'
+                     	}
+                     	
+			}catch (e) {   
+                           currentBuild.result="FAILED"
+                           throw e
+                    } 
+				}
+			}	 
+		}
+	stage('Code Deploy) {
+	        steps {
+				script {
+					try {
+					echo "#####Initiating Deployment to Commerce Cloud instance#####"
+					rc = command 'npm run code:deploy ./dist/$BUILD_VERSION.zip -- -cid $SFCC_OAUTH_CLIENT_ID -cs $SFCC_OAUTH_CLIENT_SECRET -i $Instance'
+					if (rc != 0) {
+                           error 'Code Deploy Failed.'
+                     	}
+                     	echo "################SUCCESSFULLY DEPLOYED################"
+			}catch (e) {   
+                           currentBuild.result="FAILED"
+                           throw e
+                    } 
+				}
+			}	 
+		}	
+    
+        post {
+      /*
+      https://www.jenkins.io/doc/book/pipeline/syntax/#post
+      Always post somewhere the watermark:
+  	- md5sum of Jenkinsfile
+  	- Output of the Jenkinsfile checker output
+      */
+      success {
+      notifyStatus()
+      cleanWs()
+      }
+      failure {
+     	notifyStatus()
+        cleanWs()
+      }
+      unstable {
+        cleanWs()
+      }
+    }       
+}
+
+def notifyStatus(def buildStatus = currentBuild.result) {
+   def details = """<p>${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+    <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>"""
+    echo "${details}"
+
+}
+def command(script) {
+    if (isUnix()) {
+        return sh(returnStatus: true, script: script);
+    } else {
+        return bat(returnStatus: true, script: script);
+    }	 
+}
+String getCommit() {
+return sh(script: 'git rev-parse --short HEAD', returnStdout: true)?.trim()
+}

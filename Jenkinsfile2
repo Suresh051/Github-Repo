@@ -7,9 +7,9 @@ pipeline {
             }
         }
      environment {
-        sfcc_ClientId  = credentials('CLIENT_ID')
-        sfcc_Client_Secret  = credentials('CLIENT_SECRET')
-	    dev_env = "bgtm-024.sandbox.us01.dx.commercecloud.salesforce.com"
+       		 SFCC_OAUTH_CLIENT_ID = credentials('CLIENT_ID')
+        	 SFCC_OAUTH_CLIENT_SECRET = credentials('CLIENT_SECRET')
+	         DEV_INSTANCE = "bgtm-024.sandbox.us01.dx.commercecloud.salesforce.com"
        }
     stages {
        stage('Install Deps') {
@@ -63,7 +63,7 @@ pipeline {
 				script {
 					try {
 					echo "#####Initiating Data Import#####"
-					rc = command 'npm run data:deploy ./dist/site-impex.zip -- -cid $SFCC_OAUTH_CLIENT_ID -cs $SFCC_OAUTH_CLIENT_SECRET -i $Instance'
+					rc = command 'npm run data:deploy ./dist/site-impex.zip -- -cid $SFCC_OAUTH_CLIENT_ID -cs $SFCC_OAUTH_CLIENT_SECRET -i $DEV_INSTANCE'
 					if (rc != 0) {
                            error 'Data Deploy Failed.'
                      	}
@@ -77,38 +77,36 @@ pipeline {
 		}
 	stage('Code Zip') {
 	        steps {
-				script {
-					try {
-					rc = command 'npm run code:zip $BUILD_VERSION'
-					if (rc != 0) {
-                           error 'Code Zip Failed.'
-                     	}
-                     	
+			script {
+			     try {
+				rc = command 'npm run code:zip $BUILD_VERSION'
+				if (rc != 0) {
+                              error 'Code Zip Failed.'
+                     	        }
 			}catch (e) {   
                            currentBuild.result="FAILED"
                            throw e
-                    } 
-				}
-			}	 
+                    		} 
+			    }
+		      }	 
 		}
 	stage('Code Deploy) {
 	        steps {
-				script {
-					try {
-					echo "#####Initiating Deployment to Commerce Cloud instance#####"
-					rc = command 'npm run code:deploy ./dist/$BUILD_VERSION.zip -- -cid $SFCC_OAUTH_CLIENT_ID -cs $SFCC_OAUTH_CLIENT_SECRET -i $Instance'
-					if (rc != 0) {
-                           error 'Code Deploy Failed.'
-                     	}
-                     	echo "################SUCCESSFULLY DEPLOYED################"
-			}catch (e) {   
-                           currentBuild.result="FAILED"
-                           throw e
-                    } 
+		    script {
+			try {
+			    echo "#####Initiating Deployment to Commerce Cloud instance#####"
+			    rc = command 'npm run code:deploy ./dist/$BUILD_VERSION.zip -- -cid $SFCC_OAUTH_CLIENT_ID -cs $SFCC_OAUTH_CLIENT_SECRET -i $DEV_INSTANCE'
+			    if (rc != 0) {
+                                  error 'Code Deploy Failed.'
+                     	    }
+                     	     echo "################SUCCESSFULLY DEPLOYED################"
+			     }catch (e) {   
+                                 currentBuild.result="FAILED"
+                                 throw e
+                    		    } 
 				}
 			}	 
 		}	
-    
         post {
       /*
       https://www.jenkins.io/doc/book/pipeline/syntax/#post

@@ -14,71 +14,70 @@ pipeline {
     stages {
        stage('Install Deps') {
 	        steps {
-				script {
-					try {
-					   rc = command 'npm run setup'
-					   if (rc != 0) {
+		    script {
+			try {
+			    rc = command 'npm run setup'
+			    if (rc != 0) {
                            error 'Install Deps Failed.'
-                     	}
+                     	  }
 			}catch (e) {   
                            currentBuild.result="FAILED"
                            throw e
-                    } 
-				}
-			}	 
-		}
+                          } 
+		      }
+		   }	 
+	        }
 	   stage('Build Code') {
 	        steps {
-				script {
-					try {
-					  rc = command 'npm run build:dev'
-					  if (rc != 0) {
-                           error 'Build code Failed.'
-                     	}					  
+		     script {
+			  try {
+			       rc = command 'npm run build:dev'
+			       if (rc != 0) {
+                                    error 'Build code Failed.'
+                     	        }					  
 			}catch (e) {   
                            currentBuild.result="FAILED"
                            throw e
-                    } 
+                    		    } 
 				}
 			}	 
 		}
 	 stage('Data Zip') {
 	        steps {
-				script {
-					try {
-					rc = command 'npm run data:zip'
-					if (rc != 0) {
-                           error 'Data Zip Failed.'
-                     	}
-                     	
+		     script {
+			   try {
+				rc = command 'npm run data:zip'
+				if (rc != 0) {
+                                 error 'Data Zip Failed.'
+                     	       }
 			}catch (e) {   
                            currentBuild.result="FAILED"
                            throw e
-                    } 
-				}
-			}	 
+                                   } 
+			    }
+		     }	 
 		}
     stage('Data Deploy') {
 	        steps {
-				script {
-					try {
-					echo "#####Initiating Data Import#####"
-					rc = command 'npm run data:deploy ./dist/site-impex.zip -- -cid $SFCC_OAUTH_CLIENT_ID -cs $SFCC_OAUTH_CLIENT_SECRET -i $DEV_INSTANCE'
-					if (rc != 0) {
-                           error 'Data Deploy Failed.'
-                     	}
+		    script {
+			  try {
+				echo "#####Initiating Data Import#####"
+				rc = command 'npm run data:deploy ./dist/site-impex.zip -- -cid $SFCC_OAUTH_CLIENT_ID -cs $SFCC_OAUTH_CLIENT_SECRET -i $DEV_INSTANCE'
+				if (rc != 0) {
+                                 error 'Data Deploy Failed.'
+                     	    }
                      	echo "################SUCCESSFULLY DATA IMPORTED################"
 			}catch (e) {   
                            currentBuild.result="FAILED"
                            throw e
-                    } 
-				}
-			}	 
+                                 } 
+			      }
+		       }	 
 		}
 	stage('Code Zip') {
 	        steps {
-			script {
-			     try {
+		     script {
+			    try {
 				rc = command 'npm run code:zip $BUILD_VERSION'
 				if (rc != 0) {
                               error 'Code Zip Failed.'
@@ -106,7 +105,25 @@ pipeline {
                     		    } 
 				}
 			}	 
+		}
+	stage('Post Deploy) {
+	        steps {
+		    script {
+			try {
+			    echo "#####Initiating Post Deployment#####"
+			    rc = command 'npm run job:postDeploy -- -i $INSTANCE -cid $SFCC_OAUTH_CLIENT_ID -cs $SFCC_OAUTH_CLIENT_SECRET'
+			    if (rc != 0) {
+                                  error 'POST Deploy Failed.'
+                     	    }
+                     	     echo "################POST DEPLOYMENT SUCCESSFUL################"
+			     }catch (e) {   
+                                 currentBuild.result="FAILED"
+                                 throw e
+                    		    } 
+				}
+			}	 
 		}	
+		
         post {
       /*
       https://www.jenkins.io/doc/book/pipeline/syntax/#post

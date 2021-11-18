@@ -122,7 +122,25 @@ pipeline {
                     		    } 
 				}
 			}	 
-		}	
+		}
+		
+/*	stage('Post Deploy) {
+	        steps {
+		    script {
+			try {
+			    echo "#####Initiating individual job run#####"
+			    rc = command 'npm run Job:exec <jobid> -- -i $INSTANCE -cid $SFCC_OAUTH_CLIENT_ID -cs $SFCC_OAUTH_CLIENT_SECRET'
+			    if (rc != 0) {
+                                  error 'INDIVIDUAL JOB RUN FAILED'
+                     	    }
+                     	     echo "################INDIVIDUAL JOB RUN COMPLETED################"
+			     }catch (e) {   
+                                 currentBuild.result="FAILED"
+                                 throw e
+                    		    } 
+				}
+			}	 
+		}	*/
 		
         post {
       /*

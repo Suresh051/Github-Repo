@@ -1,3 +1,4 @@
+#ok
 pipeline {
     agent none
     stages {

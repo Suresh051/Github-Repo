@@ -1,6 +1,6 @@
 //prodApproved = false
 devApproved = false
-isPullRequest = BRANCH_NAME ==~ /PR-([0-9]+)/
+isPullRequest = env.BRANCH_NAME ==~ /PR-([0-9]+)/
 
 pipeline {
     agent { label 'master' }
@@ -12,7 +12,7 @@ pipeline {
         stage('request devl deployment') {
             steps {
                 script {
-                   if(BRANCH_NAME == 'master') devApproved = true
+                   if(env.BRANCH_NAME == 'master') devApproved = true
                    else if (isPullRequest) devApproved = false
                    else 
                    devApproved = isApproved('dev')

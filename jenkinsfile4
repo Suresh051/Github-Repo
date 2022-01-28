@@ -19,7 +19,7 @@ pipeline {
                    devApproved = isApproved('dev')
                 }
                 echo "devApproved: ${devApproved}"
-                    echo ${env.BRANCH_NAME}
+                    echo env.BRANCH_NAME
             }
         }
 

@@ -1,0 +1,60 @@
+//prodApproved = false
+devApproved = false
+//isPullRequest = BRANCH_NAME ==~ /PR-([0-9]+)/
+
+pipeline {
+    agent { label 'master' }
+
+    options { buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '30')) }
+
+    stages {
+
+        stage('request devl deployment') {
+            steps {
+                script {
+                   // if(BRANCH_NAME == 'master') devApproved = true
+                  //  else if (isPullRequest) devApproved = false
+                   // else 
+                    devApproved = isApproved('dev')
+                }
+                echo "devApproved: ${devApproved}"
+            }
+        }
+
+        stage('devl - deploy runner') {
+            when { expression { devApproved == true } }
+            steps { 
+          echo "Runner deployed on dev1"
+            }
+        }
+
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
+    
+def isApproved(String env) {
+    try {
+        timeout(time: 90, unit: 'SECONDS') { approvalMap = getInput(env) }
+        def approved = approvalMap != null && approvalMap['APPROVED'] == 'yes'
+        if(!approved) echo "This build was rejected by: ${approvalMap['APPROVER']}"
+        else echo "This build was approved by: ${approvalMap['APPROVER']}"
+        approved
+    } catch(err) { false }
+}
+
+def getInput(String env) {
+    input(
+        id: "${env}Deployment",
+        message: "Proceed with ${env} Deployment?",
+        parameters: [
+                choice(choices: 'no\nyes', name: 'APPROVED', description: "Choose yes to deploy to ${env}, no to reject build")
+        ],
+        submitter: 'Suresh051',
+        submitterParameter: 'APPROVER'
+    )
+}

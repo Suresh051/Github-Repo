@@ -12,13 +12,14 @@ pipeline {
         stage('request devl deployment') {
             steps {
                 script {
-                echo ${env.BRANCH_NAME}
+            
                    if(env.BRANCH_NAME == 'master') devApproved = true
                    else if (isPullRequest) devApproved = false
                    else 
                    devApproved = isApproved('dev')
                 }
                 echo "devApproved: ${devApproved}"
+                    echo ${env.BRANCH_NAME}
             }
         }
 

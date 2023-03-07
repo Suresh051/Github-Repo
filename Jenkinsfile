@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building..gh'
+                echo 'Buildindg..gh'
             }
         }
         stage('Test') {

@@ -4,15 +4,18 @@ pipeline {
   	skipDefaultCheckout false
   	}
     stages {
+    stage{
         steps {
 	    script {
 	 env.GIT_TAG_NAME = gitTagName()
 	 echo "${env.GIT_TAG_NAME}"
 		}
 	    }
-		
+	}	
         }		
   }
+  
 String gitTagName() {
 return sh(returnStdout: true, script: "git tag --sort version:refname | tail -1").trim()
 }
+

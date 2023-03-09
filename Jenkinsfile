@@ -4,7 +4,7 @@ pipeline {
   parameters {
     choice(
       name: 'Env',
-      choices: ['DEV', 'QA', 'UAT', 'PROD'],
+      choices: ['L1', 'L2', 'L3', 'L4'],
       description: 'Passing the Environment'
     )
   }

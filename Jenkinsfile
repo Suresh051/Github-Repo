@@ -12,6 +12,7 @@ pipeline {
     stage('Environment') {
       steps {
         echo " The environment is ${params.Env}"
+        sh './deploy.sh'
       }
     }
   }

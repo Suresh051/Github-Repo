@@ -31,7 +31,7 @@ pipeline {
                     }
                 }
             }
-                      
+     }          
     stage('Environment') {
       steps {
         echo " The environment is ${params.Env}"
@@ -40,3 +40,4 @@ pipeline {
     }
   }
 }
+  

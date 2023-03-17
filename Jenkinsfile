@@ -12,9 +12,9 @@ pipeline {
       stage('Environment setup') {
       steps {
         script{
-          if (Env.equalsIgnoreCase('L1') {
+          if (Env.equalsIgnoreCase('L1')) {
            def Servers = [1,2,3]          
-          }else if (Env.equalsIgnoreCase('L2') {
+          }else if (Env.equalsIgnoreCase('L2')) {
            def Servers = [3,4,5]  
         }
       }

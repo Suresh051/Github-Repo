@@ -10,6 +10,7 @@ pipeline {
   }
   environment {
     ENV = "${env.Env}"
+    Servers = "${env.Servers}"
   }
   stages {
       stage('Environment setup') {

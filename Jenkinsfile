@@ -8,6 +8,9 @@ pipeline {
       description: 'Passing the Environment'
     )
   }
+  environment {
+    ENV = "${env.Env}"
+  }
   stages {
       stage('Environment setup') {
       steps {

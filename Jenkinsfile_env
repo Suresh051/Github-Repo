@@ -1,0 +1,92 @@
+properties([
+                            parameters([
+                                [$class: 'ChoiceParameter', 
+                                    choiceType: 'PT_SINGLE_SELECT', 
+                                    description: 'Select the Environemnt from the Dropdown List', 
+                                    filterLength: 1, 
+                                    filterable: false, 
+                                    name: 'environment', 
+                                    script: [
+                                        $class: 'GroovyScript', 
+                                        fallbackScript: [
+                                            classpath: [], 
+                                            sandbox: true, 
+                                            script: 
+                                                "return['Could not get The environemnts']"
+                                        ], 
+                                        script: [
+                                            classpath: [], 
+                                            sandbox: true, 
+                                            script: 
+                                                "return['L1','L2','L3','L4','L5','L6']"
+                                        ]
+                                    ]
+                                ],
+                                [$class: 'CascadeChoiceParameter', 
+                                    choiceType: 'PT_CHECKBOX', 
+                                    description: 'Select the servers from the List',
+                                    name: 'Servers_List', 
+                                    referencedParameters: 'environment', 
+                                    script: 
+                                        [$class: 'GroovyScript', 
+                                        fallbackScript: [
+                                                classpath: [], 
+                                                sandbox: true, 
+                                                script: "return['Could not get Environment from Env Param']"
+                                                ], 
+                                        script: [
+                                                classpath: [], 
+                                                sandbox: true, 
+                                                script: '''
+                                                if (environment.equals("L1")){
+                                                    return["1", "2", "3"]
+                                                }
+                                                else if(environment.equals("L2")){
+                                                    return["4", "5", "6"]
+                                                }
+                                                else if(environment.equals("L3")){
+                                                    return["7", "8", "9"]
+                                                }
+												else if(environment.equals("L4")){
+                                                    return["10", "11", "12"]
+                                                }
+												else if(environment.equals("L5")){
+                                                    return["13", "14", "15"]
+                                                }
+												else if(environment.equals("L6")){
+                                                    return["16", "17", "18"]
+                                                }
+                                                '''
+                                            ] 
+                                    ]
+                                ]
+                                
+                            ])
+                        ])
+                        
+pipeline {
+  agent any
+  stages {
+	stage('Demo Active Choices Parameter') {
+	  steps {
+		script{
+		     if ( env.Servers_List.isEmpty() ) {
+            echo "Server not specified."
+            autoCancelled = true
+            error('Aborting the build.')
+          } else {
+            echo "Servers total: ${env.Servers_List}"
+            String[] Servers_Array = "${params.Servers_List}".split(',');
+            for (server in Servers_Array) {
+              echo "SERVERS: ${server}"
+            }
+                        //params.AMI_List.split(',').each { server ->
+                         //   bat "echo Copy file to ${server}"
+                            
+                        }
+                    }
+	  }
+	}
+  }
+}
+

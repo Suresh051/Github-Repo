@@ -11,6 +11,6 @@ jobs:
       - run: echo "${{ github.event.pull_request.base.ref }}"
       - name: delete branch
         if: github.event.pull_request.merged == true
-        uses: SvanBoxel/delete-merged-branch@main
+        uses: Suresh051/delete-merged-branch@main
         env:
            GITHUB_TOKEN: ${{ github.token }}

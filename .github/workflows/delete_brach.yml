@@ -1,0 +1,10 @@
+name: delete+branch
+on: 
+  pull_request:
+    types: [closed]
+jobs:
+ job1:
+    runs-on: [ ubuntu-latest ]
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+    steps:
+     - run: echo ${{ github.ref_name }}

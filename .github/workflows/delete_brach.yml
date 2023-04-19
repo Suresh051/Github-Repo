@@ -1,10 +1,11 @@
-name: delete+branch
+name: delete branch on close pr
 on: 
   pull_request:
     types: [closed]
+  
 jobs:
- job1:
-    runs-on: [ ubuntu-latest ]
-    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+  delete-branch:
+    runs-on: ubuntu-latest
     steps:
-     - run: echo ${{ github.base_ref }}
+      - name: delete branch
+        uses: SvanBoxel/delete-merged-branch@main

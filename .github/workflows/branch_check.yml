@@ -14,9 +14,9 @@ jobs:
      - name: branch check
        run: |
          #!/bin/bash
-         patterns=("bugfix-" "release-" "hotfix-" "defect-de" "feature-*" "pr")
-         name=${{ github.ref }}
-         echo ${{ github.ref }}
+         patterns=("bugfix-" "release-" "hotfix-" "defect-de" "feature-*")
+         name=${{ GITHUB_REF_NAME }}
+         echo ${{ GITHUB_REF_NAME }}
          for pattern in "${patterns[@]}"
           do
           if [[ $name =~ $pattern ]]; then

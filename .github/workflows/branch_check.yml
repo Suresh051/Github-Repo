@@ -13,10 +13,14 @@ jobs:
 
      - name: branch check
        run: |
-          echo ${{github.ref}}
-          name=${{github.ref}} 
-          if [[ $name =~ ^(bugfix-*|release-*|hotfix-*|defect-de*|feature-*|pr*)$ ]]; then
-          echo " Branch pattern is matching"
+         #!/bin/bash
+         patterns=("bugfix-*" "release-*" "hotfix-*" "defect-de*" "feature-*" "pr*")
+         for pattern in "${patterns[@]}"
+          do
+          if [[ $myString =~ $pattern ]]; then
+          echo "The string is matches the pattern: $pattern"
           else
-          echo " Branch pattern not matching";fi
+            echo "The string is not matches the pattern: $pattern"
+            fi
+            done
        shell: bash

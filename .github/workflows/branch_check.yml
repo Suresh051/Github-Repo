@@ -1,10 +1,19 @@
-name: branch check on open pr
-on: 
+name: Branch_Check
+on:
   pull_request:
-  
 jobs:
   delete-branch:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "${{ github.event.pull_request.base.ref }}"
- 
+     - name: branch check
+       run: |
+         #!/bin/bash
+         name=$GITHUB_REF_NAME
+         echo $GITHUB_REF_NAME
+         if [[ "$name" =~ ^bugfix-.*|^release-.*|^hotfix-.*|^defect-de.*|^feature-.* ]];
+         then
+           echo "Branch matches";
+          else
+           echo "Branch not matching" 
+           exit 1; fi
+       shell: bash

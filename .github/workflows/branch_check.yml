@@ -18,5 +18,5 @@ jobs:
           if [[ "${name}" != @(bugfix-*|release-*|hotfix-*|defect-de*|feature-*|Pr*) ]]; then
           echo " Branch pattern not matching"
           else
-          echo " Branch pattern is matchin"
+          echo " Branch pattern is matchin";fi
        shell: bash

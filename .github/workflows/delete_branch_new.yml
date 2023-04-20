@@ -1,13 +1,13 @@
-name: delete_branch_1
+name: delete_branch_new
 on: 
   pull_request:
     types: [Closed]
 
 jobs:
-  delete-branch_1:
+  delete_branch_new:
     runs-on: ubuntu-latest
     steps:
-    - name: delete-branch_1 on PR merge/close
+    - name: delete_branch_new on PR merge/close
       if: github.event.pull_request.merged == true
       run: |
          #!/bin/bash

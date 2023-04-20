@@ -14,7 +14,7 @@ jobs:
      - name: branch check
        run: |
          #!/bin/bash
-         patterns=("bugfix-*" "release-*" "hotfix-*" "defect-de*" "feature-*" "pr*")
+         patterns=("bugfix-" "release-" "hotfix-" "defect-de" "feature-*" "pr")
          for pattern in "${patterns[@]}"
           do
           if [[ $myString =~ $pattern ]]; then

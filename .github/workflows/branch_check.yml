@@ -1,4 +1,4 @@
-name: Branch_Check
+name: branch_check
 on:
   pull_request:
 jobs:

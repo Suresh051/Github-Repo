@@ -11,15 +11,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
      - name: Extract branch name
-       if: github.event_name == 'pull_request'
+       #if: github.event_name == 'pull_request'
        shell: bash
        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/})"
        id: extract_branch
 
      - name: branch check
        run: |
-          name="ruby"
-          if [[ $name == rub* ]] # * is used for pattern matching
+          echo $BRANCH_NAME 
+          name=$BRANCH_NAME 
+          if [[ $name == p* ]] # * is used for pattern matching
           then
           echo "true";
           else

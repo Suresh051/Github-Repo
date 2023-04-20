@@ -1,16 +1,10 @@
 name: branch check on open pr
 on: 
   pull_request:
-    types: [open]
-
   
 jobs:
   delete-branch:
     runs-on: ubuntu-latest
     steps:
       - run: echo "${{ github.event.pull_request.base.ref }}"
-      - name: delete branch
-        if: github.event.pull_request.merged == true
-        uses: Suresh051/delete-merged-branch@main
-        env:
-           GITHUB_TOKEN: ${{ github.token }}
+ 

@@ -15,9 +15,11 @@ jobs:
        run: |
          #!/bin/bash
          patterns=("bugfix-" "release-" "hotfix-" "defect-de" "feature-*" "pr")
+         name=${{ github.ref }}
+         echo ${{ github.ref }}
          for pattern in "${patterns[@]}"
           do
-          if [[ $myString =~ $pattern ]]; then
+          if [[ $name =~ $pattern ]]; then
           echo "The string is matches the pattern: $pattern"
           else
             echo "The string is not matches the pattern: $pattern"

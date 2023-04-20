@@ -1,0 +1,15 @@
+name: branch check on open pr
+on: 
+  pull_request:
+    types: [Closed]
+
+  
+jobs:
+  delete-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get PR branch
+        uses: xt0rted/pull-request-comment-branch@v1
+        id: comment-branch
+      - name: Checkout PR branch
+        run: echo "${{ steps.comment-branch.outputs.head_ref }}"

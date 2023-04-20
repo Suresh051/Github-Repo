@@ -9,8 +9,8 @@ jobs:
      - name: branch check
        run: |
          #!/bin/bash
-         name=${{ github.ref_name }}
-         echo ${{ github.ref_name }}
+         name=${{ github.head_ref }}
+         echo ${{ github.head_ref }}
          if [[ "$name" =~ ^bugfix-.*|^release-.*|^hotfix-.*|^defect-de.*|^feature-.* ]];
          then
            echo "Branch matches";

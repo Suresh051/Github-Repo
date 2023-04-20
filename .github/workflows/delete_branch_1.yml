@@ -1,15 +1,16 @@
-name: branch check on open pr
+name: delete_branch_1
 on: 
   pull_request:
     types: [Closed]
 
   
 jobs:
-  delete-branch:
+  delete-branch_1:
     runs-on: ubuntu-latest
     steps:
-      - name: Get PR branch
-        uses: xt0rted/pull-request-comment-branch@v1
-        id: comment-branch
-      - name: Checkout PR branch
-        run: echo "${{ steps.comment-branch.outputs.head_ref }}"
+    - name: delete-branch_1 on PR merge/close
+      if: github.event.pull_request.merged == true
+      run: |
+         #!/bin/bash
+         echo ${{ github.head_ref }}
+         git branch --delete  ${{ github.head_ref }}

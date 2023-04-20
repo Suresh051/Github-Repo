@@ -15,7 +15,7 @@ jobs:
        run: |
           echo ${{github.ref}}
           name=${{github.ref}} 
-          if [[ $name == pr* ]] # * is used for pattern matching
+          if [[ $name == refs/heads/pr* ]] # * is used for pattern matching
           then
           echo "true";
           else

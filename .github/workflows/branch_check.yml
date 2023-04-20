@@ -1,10 +1,27 @@
-name: branch check on open pr
+name: Branch_Check
 on: 
-  pull_request:
+  push:
+   branches:
+   - '*'
   
 jobs:
+ 
   delete-branch:
+   
     runs-on: ubuntu-latest
     steps:
-      - run: echo "${{ github.event.pull_request.base.ref }}"
+     - name: Extract branch name
+       if: github.event_name == 'pull_request'
+       shell: bash
+       run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/})"
+       id: extract_branch
+
+     - name: branch check
+       run: |
+          name="ruby"
+          if [[ $name == rub* ]] # * is used for pattern matching
+          then
+          echo "true";
+          else
+          echo "false"; fi
  

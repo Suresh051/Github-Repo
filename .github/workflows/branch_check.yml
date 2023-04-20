@@ -15,9 +15,8 @@ jobs:
        run: |
           echo ${{github.ref}}
           name=${{github.ref}} 
-          if [[ $name == refs/heads/pr* ]] # * is used for pattern matching
-          then
-          echo "true";
+          if [[ "${name}" != @(bugfix-*|release-*|hotfix-*|defect-de*|feature-*|Pr*) ]]; then
+          echo " Branch pattern not matching
           else
-          echo "false"; fi
- 
+          echo " Branch pattern is matchin"
+       shell: bash

@@ -8,14 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - id: bump
-      uses: zwaldowski/match-label-action@v4
-      with:
-       allowed: major,minor,patch
-    - uses: zwaldowski/semver-release-action@v3
-      with:
-        bump: ${{ steps.bump.outputs.match }}
-        github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: Bump version and push tag
       uses: Instrument/github-tag-action@v1.0
       env:

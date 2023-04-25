@@ -1,13 +1,13 @@
 name: reponame
 on: 
   push:
-  branches:
-  - '*'
+   branches:
+    - '*'
 jobs:
   reponame:
    env: 
-   GITHUB_REPO_NAME: ${{ GITHUB_REPOSITORY#*/ }}
-    runs-on: ubuntu-latest
-    steps:
+     GITHUB_REPO_NAME: ${{ GITHUB_REPOSITORY#*/ }}
+   runs-on: ubuntu-latest 
+   steps:
       #- run: echo ::set-env name=GITHUB_REPO_NAME::${GITHUB_REPOSITORY#*/}
        - run: echo ${{env.GITHUB_REPO_NAME}}

@@ -7,23 +7,17 @@ jobs:
   reponame:
    runs-on: ubuntu-latest 
    steps:
-    - name: Set env
-      run: echo ::set-env name=TF_VAR_instance_label::${GITHUB_REPOSITORY#*/}-${GITHUB_SHA:0:7}
     - name: Test
       run: echo $GITHUB_REPO_NAME
   reponame1:
    runs-on: ubuntu-latest 
    needs: [reponame]
    steps:
-    - name: Set env
-      run: echo ::set-env name=TF_VAR_instance_label::${GITHUB_REPOSITORY#*/}-${GITHUB_SHA:0:7}
     - name: Test
       run: echo $GITHUB_REPO_NAME
   reponame2:
    runs-on: ubuntu-latest 
    needs: [reponame1]
    steps:
-    - name: Set env
-      run: echo ::set-env name=TF_VAR_instance_label::${GITHUB_REPOSITORY#*/}-${GITHUB_SHA:0:7}
     - name: Test
       run: echo $GITHUB_REPO_NAME

@@ -8,6 +8,6 @@ jobs:
    runs-on: ubuntu-latest 
    steps:
     - name: Set env
-      run: echo "GITHUB_REPO_NAME=$GITHUB_REPOSITORY#*/" >> $GITHUB_ENV
+      run: echo "GITHUB_REPO_NAME=$GITHUB_REPOSITORY" >> $GITHUB_ENV
     - name: Test
       run: echo $GITHUB_REPO_NAME

@@ -7,7 +7,8 @@ jobs:
   reponame:
    runs-on: ubuntu-latest 
    steps:
-    - run: echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
-    - run: echo ${{ env.REPOSITORY_NAME }}
+    - run: |
+       echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+       echo ${{env.REPOSITORY_NAME}}
      
 

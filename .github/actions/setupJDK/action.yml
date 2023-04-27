@@ -1,0 +1,14 @@
+name: 'setupJDK'
+description: 'setupJDK.'
+inputs:
+   distribution:
+     required: true
+   java-version: 
+     required: true
+runs:
+  using: "composite"
+  steps:
+   - uses: actions/setup-java@v3
+     with:
+      distribution: ${{ inputs.distribution }}
+      java-version: ${{ inputs.java-version }}

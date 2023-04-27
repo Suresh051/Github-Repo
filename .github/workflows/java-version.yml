@@ -9,7 +9,7 @@ jobs:
    steps:
      - uses: actions/checkout@v2
      - name: setup JDK
-       uses: Github-Rpeo/.github/actions/setupJDK@master
+       uses: ./.github/actions/setupJDK@mater
        with: 
           distribution: 'temurin'
           java-version: '8'

@@ -11,8 +11,8 @@ jobs:
      - name: setup JDK
        uses: ./.github/workflows/setupJDK@master
        with: 
-          distribution: temurin
-          java-version: 8
+          distribution: 'temurin'
+          java-version: '8'
      - run: |
            java -version
       #- run: echo ::set-env name=GITHUB_REPO_NAME::${GITHUB_REPOSITORY#*/}

@@ -9,7 +9,7 @@ jobs:
    steps:
      - uses: actions/checkout@v2
      - name: setup JDK
-       uses: ./.github/workflows/setupJDK@master
+       uses: Suresh051/Github-Repo/.github/workflows/setupJDK@master
        with: 
           distribution: 'temurin'
           java-version: '8'

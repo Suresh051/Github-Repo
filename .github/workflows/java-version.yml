@@ -1,4 +1,4 @@
-name: reponame
+name: java-version
 on: 
   push:
    branches:

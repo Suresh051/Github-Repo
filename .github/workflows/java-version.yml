@@ -7,13 +7,13 @@ jobs:
   reponame:
    env: 
    GITHUB_REPO_NAME: ${{ GITHUB_REPOSITORY#*/ }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: Github-Repo/.github/workflows/setupJDK@master
-        with: 
+  runs-on: ubuntu-latest
+   steps:
+   - uses: Github-Repo/.github/workflows/setupJDK@master
+    with: 
           distribution: temurin
           java-version: 8
-       - run: |
+   - run: |
            java -version
       #- run: echo ::set-env name=GITHUB_REPO_NAME::${GITHUB_REPOSITORY#*/}
-       - run: echo ${{env.GITHUB_REPO_NAME}}
+   - run: echo ${{env.GITHUB_REPO_NAME}}

@@ -1,6 +1,7 @@
 name: java-version
 on:
   workflow_dispatch:
+  workflow_call:
     
 jobs:
   reponame:

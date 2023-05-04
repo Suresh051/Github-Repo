@@ -5,7 +5,7 @@ jobs:
   reponame:
    runs-on: ubuntu-latest
    steps:
-     - uses: ./github/worflows/devl.yml@master
+     - uses: suresh051/Github-repo/.github/worflows/devl.yml@master
      - uses: actions/checkout@v2
      - name: setup JDK
        run: echo "prod"

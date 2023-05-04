@@ -1,0 +1,15 @@
+name: java-version
+on:
+  workflow_dispatch:
+    
+jobs:
+  reponame:
+   runs-on: ubuntu-latest
+   steps:
+     - name: setup JDK
+       uses: ./.github/actions/setupJDK@mater
+       with: 
+          distribution: 'temurin'
+          java-version: '8'
+     - run: |
+           java -version

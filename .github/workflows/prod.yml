@@ -1,4 +1,4 @@
-name: java-version
+name: java-version-prod
 on:
   workflow_dispatch:
 jobs:

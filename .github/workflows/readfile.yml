@@ -9,10 +9,12 @@ jobs:
    steps:
    - name: Checkout repository
      uses: actions/checkout@v3
+   - run : |
+      sh "find ./.github/workflows -type f -exec basename {} \\; >> scenario.txt"
    - name: Read readme
      id: package
      uses: juliangruber/read-file-action@v1
      with:
-      path: ./.github/workflows/readme
+      path: ./scenario.txt
    - name: Echo package.json
      run: echo "${{ steps.package.outputs.content }}"

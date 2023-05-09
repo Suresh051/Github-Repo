@@ -14,7 +14,7 @@ jobs:
          
          touch scenario.txt
          ls -lrt
-         /usr/bin/find ./src/it/resources/scenarios -type f -exec basename {} \\; >> scenario.txt
+         "/usr/bin/find ./src/it/resources/scenarios -type f -exec basename {} \\;" >> scenario.txt
      shell: bash
    - name: Read readme
      id: package

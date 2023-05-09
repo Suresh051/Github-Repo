@@ -10,7 +10,7 @@ jobs:
    - name: Checkout repository
      uses: actions/checkout@v3
    - run : |
-      sh "find ./.github/workflows -type f -exec basename {} \\; >> scenario.txt"
+      sh "find ./ -type f -exec basename {} \\; >> scenario.txt"
    - name: Read readme
      id: package
      uses: juliangruber/read-file-action@v1

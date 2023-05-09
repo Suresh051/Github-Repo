@@ -10,7 +10,8 @@ jobs:
    - name: Checkout repository
      uses: actions/checkout@v3
    - run : |
-        find ./src/it/resources/scenarios -type f -exec basename {} \\; >> scenario.txt
+        find "./src/it/resources/scenarios -type f -exec basename {} \\; >> scenario.txt"
+     shell: bash
    - name: Read readme
      id: package
      uses: juliangruber/read-file-action@v1

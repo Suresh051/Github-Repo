@@ -10,8 +10,9 @@ jobs:
    - name: Checkout repository
      uses: actions/checkout@v3
    - run : |
-        touch scenario.txt
-        find "src/it/resources/scenarios -type f -exec basename {} \\; >> scenario.txt"
+         ls -lrt
+         touch scenario.txt
+         find src/it/resources/scenarios -type f -exec basename {} \\; >> scenario.txt
      shell: bash
    - name: Read readme
      id: package

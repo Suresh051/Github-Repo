@@ -1,0 +1,13 @@
+name: return
+on:
+  push:
+   branches:
+    - matser
+jobs:
+  return:
+    runs-on: ubuntu-latest
+    steps:
+     - name: branch check
+       run: |
+           echo "GITHUB_SHA_SHORT=$((git rev-parse HEAD).trim())" >> $GITHUB_ENV
+           echo $GITHUB_SHA_SHORT

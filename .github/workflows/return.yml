@@ -11,4 +11,5 @@ jobs:
      - name: branch check
        run: |
            echo "GITHUB_SHA_SHORT=$(git rev-parse HEAD)" >> $GITHUB_ENV
-           echo $GITHUB_SHA_SHORT
+     - run: |
+         echo $GITHUB_SHA_SHORT

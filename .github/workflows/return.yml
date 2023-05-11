@@ -7,6 +7,7 @@ jobs:
   return:
     runs-on: ubuntu-latest
     steps:
+     - uses: actions/checkout@v2
      - name: branch check
        run: |
            echo "GITHUB_SHA_SHORT=$(git rev-parse HEAD)" >> $GITHUB_ENV

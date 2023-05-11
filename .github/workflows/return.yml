@@ -2,7 +2,7 @@ name: return
 on:
   push:
    branches:
-    - matser
+    - master
 jobs:
   return:
     runs-on: ubuntu-latest

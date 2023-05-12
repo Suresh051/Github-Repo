@@ -7,6 +7,7 @@ jobs:
   branch_check:
     runs-on: ubuntu-latest
     steps:
+     - uses: actions/checkout@v2
      - name: change dir
        working-directory: src/it/resources/scenarios
        run: ls -lrt

@@ -1,10 +1,15 @@
-name: branch_check
+name: branch_check_new
 on:
-  pull_request:
+  push: 
+   branches:
+   - '*'
 jobs:
   branch_check:
     runs-on: ubuntu-latest
     steps:
+     - name: change dir
+       working-directory: ./.github/workflows/setupJDK
+       run: ls -lrt
      - name: branch check
        run: |
          #!/bin/bash

@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
      - name: change dir
-       working-directory: ./.github/workflows/setupJDK
+       working-directory: .github/workflows/setupJDK
        run: ls -lrt
      - name: branch check
        run: |

@@ -3,13 +3,13 @@ on:
   workflow_dispatch:
     inputs:
       scenarios:
-        type: choice
+        type: string
         description: File Name of Scenarios to be tested
       user_simulations:
-        type: choice
+        type: string
         description: File Name of user simulation params
       feeder:
-        type: choice
+        type: string
         description: File Name of csv feeder which is to be feeded
 
 env: 
@@ -22,6 +22,10 @@ jobs:
       uses: actions/checkout@v2
     - name: deploymetn
       run: |
-        echo "Printing scenarios ${{ github.event.inputs.scenarios }}"  
-        echo "Printing user_simulations ${{ github.event.inputs.user_simulations }}"
-        echo "Printing feeder ${{ github.event.inputs.feeder }}"
+          echo "### inputs" >> $GITHUB_STEP_SUMMARY
+          echo "- scenarios: ${{ inputs.scenarios}}" >> $GITHUB_STEP_SUMMARY
+          echo "- user_simulations: ${{ inputs.user_simulations}}" >> $GITHUB_STEP_SUMMARY
+          echo "- feeder: ${{ inputs.feeder}}" >> $GITHUB_STEP_SUMMARY
+          echo "Printing scenarios ${{ github.event.inputs.scenarios }}"  
+          echo "Printing user_simulations ${{ github.event.inputs.user_simulations }}"
+          echo "Printing feeder ${{ github.event.inputs.feeder }}"

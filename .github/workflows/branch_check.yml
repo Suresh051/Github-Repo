@@ -16,7 +16,7 @@ env:
   project_name: fdssf"
 jobs:
   Build:
-   runs-on: [ deere-ubuntu-latest ]
+   runs-on: [ ubuntu-latest ]
    steps:
     - name: checkout
       uses: actions/checkout@v2

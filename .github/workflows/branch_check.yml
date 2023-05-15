@@ -8,18 +8,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
      - uses: actions/checkout@v2
-     - name: change dir
-       working-directory: src/it/resources/scenarios
-       run: ls -lrt
-     - name: branch check
-       run: |
-         #!/bin/bash
-         name=${{ github.head_ref }}
-         echo ${{ github.head_ref }}
-         if [[ "$name" =~ ^bugfix-.*|^release-.*|^hotfix-.*|^defect-de.*|^feature-.* ]];
-         then
-           echo "Branch matches";
-          else
-           echo "Branch not matching" 
-           exit 1; fi
-       shell: bash
+     - run: echo ${GITHUB_SHA::7}

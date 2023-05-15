@@ -1,11 +1,27 @@
-name: branch_check_new
+name: Deploy Devl
 on:
-  push: 
-   branches:
-   - '*'
+  workflow_dispatch:
+    inputs:
+      scenarios:
+        type: choice
+        description: File Name of Scenarios to be tested
+      user_simulations:
+        type: choice
+        description: File Name of user simulation params
+      feeder:
+        type: choice
+        description: File Name of csv feeder which is to be feeded
+
+env: 
+  project_name: fdssf"
 jobs:
-  branch_check:
-    runs-on: ubuntu-latest
-    steps:
-     - uses: actions/checkout@v2
-     - run: echo ${GITHUB_SHA::7}
+  Build:
+   runs-on: [ deere-ubuntu-latest ]
+   steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: deploymetn
+      run: |
+        echo "Printing scenarios ${{ github.event.inputs.scenarios }}"  
+        echo "Printing user_simulations ${{ github.event.inputs.user_simulations }}"
+        echo "Printing feeder ${{ github.event.inputs.feeder }}"
